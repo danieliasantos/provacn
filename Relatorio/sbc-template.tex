@@ -1,0 +1,126 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{sbc-template}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage[brazil]{babel}  
+\usepackage[utf8]{inputenc}
+\usepackage[numbers]{natbib}
+
+%\sloppy
+
+\title{Aprendizagem de máquina aplicada ao reconhecimento e \\verificação de assinaturas}
+
+\author{Daniel Elias\inst{1}, Paulo Henrique\inst{1} e \\Pedro Afonso\inst{1}}
+
+\address{Departamento de Informática -- Instituto Federal de Educação,\\ 
+	Ciência e Tecnologia de Minas Gerais (IFMG)\\ Sabará -- MG -- Brasil
+	\email{\{danielias.santos, paulohenriquercs, pedroafonsouza\}@gmail.com}
+}
+
+\begin{document} 
+	
+	\maketitle
+	
+	\begin{resumo} 
+		A verificação da autenticidade de assinaturas manuscritas é tarefa realizada cotidianamente em instituições financeiras e cartórios, entre outros, para comprovar a autoria de intenções e acordos em documentos de interesse. Essa análise de autenticidade quando feita por humanos, está restrita a profissionais especializados que, ainda assim, podem cometer erros. Desta forma, a automatização da atividade pode trazer benefícios, como a redução de custos e a celeridade. Associadas a essa automatização, técnicas de inteligência artificial, tal como a aprendizagem de máquina, podem ser aplicadas para minorar a ocorrência de erros. Portanto, este trabalho busca propor um sistema de verificação da autenticidade de assinaturas utilizando técnicas de aprendizagem de máquina.
+	\end{resumo}
+	
+	\section{Introdução}	
+		Assinaturas manuscritas são o meio mais utilizado, atualmente, para firmar contratos e intenções. Conforme fundamentou Freitas \textit{et al}.\cite{freitas2003}, sistemas de gerenciamento e controle de informações, inerentes à era digital, são constantemente confrontados com este instituto arcaico, mas estabelecido, de atribuição de autenticidade a documentos, que é a assinatura manuscrita. Neste sentido, diversos são os estudos realizados para harmonizar estes dois aspectos que, em grande medida, se mostram antagônicos. Além disso, as assinaturas representam, juridicamente, a comprovação de intenções e acordos, que geram responsabilidades a seus autores. Vê-se, então, que a assinatura tem valor para o seu autor e, portanto, há o risco de fraudes.
+		
+		Além disso, diversos fatores subjetivos influenciam a forma das assinaturas manuscritas, tais como nacionalidade, idade, tempo, hábitos, estado psicológico ou mental e condições físicas do autor. A verificação de assinatura tem o objetivo de comprovar a autenticidade por meio de comparação, entre uma assinatura reconhecida como verdadeira e outra que esteja sob questionamento\cite{goncalves2008}. Ainda segundo Gonçalves\cite{goncalves2008}, os métodos de aquisição de assinaturas podem ser \textit{on-line}, por meio de \textit{hardwares} específicos (tal como mesa digitalizadora) ou \textit{off-line}, método tradicional, no qual a assinatura é disposta em papel, e aí se enquadram os sistemas automáticos de verificação.	
+		
+		Segundo Coetzer \textit{et al}.\cite{coetzer2006}, os seres humanos apresentam altos índices de erros no processo de verificação de 		assinaturas. Percebe-se, então, que esta é uma tarefa árdua, atribuída a profissionais especialistas, e ainda assim está sujeita a erros. Gonçalves\cite{goncalves2008} cita os tipos de erros cometidos, que podem ser de ``falsa rejeição'', quando uma assinatura genuína é verificada como falsa, e ``falsa aceitação'', quando uma assinatura falsa é classificada erroneamente como genuína.
+		
+		O intuito da verificação automática de assinaturas, em termos práticos, é prover automatização, velocidade, escalabilidade e segurança à atividade, nos mais diversos contextos aplicáveis. Desta forma, este trabalho pretende desenvolver um sistema que, por meio da aprendizagem de máquina, seja capaz de executar a verificação de assinaturas manuscritas com uma taxa de erro aceitável, em relação ao desempenho humano da tarefa.
+
+	\section{Objetivo}
+		Para cumprir o seu objetivo, este trabalho intenta responder as seguintes perguntas:
+		
+		\begin{enumerate}
+			\item Qual é a taxa de acertos da técnica utilizada para reconhecimento e validação de assinaturas manuscritas?
+			\item Qual é a taxa de ocorrência de falsos-positivos?
+			\item Qual é a taxa de ocorrência de falsos-negativos?
+			\item A técnica utilizada no aprendizado de máquina tem um resultado melhor, quanto à análise, reconhecimento e validação que a verificação humana?
+		\end{enumerate}
+	
+	\section{Trabalhos Relacionados}
+			A fim de observar metodologias existentes na área de verificação de assinaturas que utilizam técnicas de aprendizado de máquina, foram estudados trabalhos relevantes ao assunto. Para Gonçalves\cite{goncalves2008} os métodos \textit{on-line} e \textit{off-line} se diferem na concepção da assinatura, porém cada um tem seus prós e contras. A ideia do autor é melhorar a capacidade de análise da abordagem \textit{off-line} uma vez que é a mais utilizada.
+			
+			Relacionado à maneira de serem obtidas as assinaturas Freitas \textit{et al}.\cite{freitas2003} ressalta que para se obter o reconhecimento de uma dada forma escrita é necessário estabelecer um grau de comparação entre as outras formas de treinamento afim de obter um maior grau de semelhança dos itens. Em seu outro estudo Justino\cite{justino2001} explica que existem elementos técnicos genéticos que mitas vezes passam imperceptíveis pela análise computacional, e portanto é necessário aumentar o grau de verificação nesses quesitos. Neste trabalho são usadas essas considerações para a construção de um sistema capaz de verificar as formas escritas. 
+			
+			No estudo de Tebaldi\cite{tebaldi2007}, é mostrado um exemplo de comparação de assinaturas. O modelo é feito de forma complexa, utilizando o algoritmo R-prop, que é uma vertente do \textit{back-propagation}, porém o resultado do estudo não é tão satisfatório.
+
+	\section{Metodologia}
+		\subsection{Coleta dos dados}
+			Foram recolhidas diversos exemplares de assinaturas manuscritas de alunos do IFMG unidade Sabará, com o intuito de alimentar a base de dados em que serão inferidos os processamentos devidos para a utilização de dados viáveis.
+				
+		\subsection{Processamento da imagem}
+		    Foram realizados recortes nas assinaturas de forma a estabelecer um padrão de dimensões de altura e largura para o consumo da programa ImageJ.	A partir da utilização do programa ImageJ, e da execução do \textit{plugin} \textit{Trainable Weka Segmentation}, se sucederam uma sequência de inferências nas imagens selecionadas para gerar arquivos no formato ARFF (\textit{Attribute-Relation File Format}) um tipo arquivo de texto ASCII que contem uma lista de instâncias, que compartilham um conjunto de atributos de cadeia, data e instâncias esparsas que possuem duas seções, uma de informações de cabeçalho (\textit{Header}) e outra de informações características de dados (\textit{Data}).
+			
+			O próximo passo foi de criar uma sequencia de rotinas pré-pro gamadas (\textit{Macro}), em que se processa uma automação de ações executadas no diretório onde estão armazenados os objetos referentes as assinaturas coletadas, realizando tratamento das imagens com inferências programadas no macro, em que se seleciona uma classe referente a camada tracejada detectada automaticamente em cada imagem carregada, e assim se processando um arquivo resultante com os dados necessários para a utilização posterior com uma estratégia de aprendizado de máquina selecionada.
+			
+			\subsection{Algorítimo de aprendizado de máquina}
+
+\begin{comment}	
+	
+	Orientações Kênia
+	
+	- informar qual câmera tirou fotos ou qual scanner foi utilizado
+	- qual a resolução e dimensão das imagens
+	- mesmo ângulo, mesma distância e mesma iluminação
+
+	\begin{itemize}
+	\item Exemplo de lista de itens.
+	\end{itemize}
+	
+	\subsection{Segunda subseção}
+	
+	Texto com exemplo de referência a Tabela~\ref{tab:tarefas}.
+	
+	\begin{table}[ht]
+	\centering
+	\caption{Exemplo de tabela}
+	\label{tab:tarefas}
+	\begin{tabular}{ p{3cm}|p{6cm}|c }
+	\multicolumn{3}{c}{Título do projeto} \\
+	\hline
+	Coluna 1 & Coluna 2 & Coluna 3\\
+	\hline
+	\multirow{3}{3cm}{Linha 1, coluna 1}  & Linha 1, coluna 2 & Linha 1, coluna 3\\
+	& Linha 1.2, coluna 2 & Linha 1.2, coluna 3 \\
+	& Linha 1.3, coluna 2 & Linha 1.3, coluna 3 \\
+	\hline
+	\multirow{3}{3cm}{Linha 2, coluna 1} & Linha 2, coluna 2 & Linha 2, coluna 3 \\
+	& Linha 2.2, coluna 2 & Linha 2.2, coluna 3 \\
+	& Linha 2.3, coluna 2 & Linha 2.3, coluna 3 \\
+	\hline
+	\end{tabular}
+	\end{table}
+	
+	\subsection{Terceira subseção}
+	
+	Texto da terceira subseção com exemplo de referência a Figura~\ref{fig:exemplo}.
+	
+	\begin{figure}[ht]
+	\centering
+	\includegraphics[width=.9\textwidth]{triangulo_quadrado_circulo.jpg}
+	\caption{Figura de exemplo}
+	\label{fig:exemplo}
+	\end{figure}
+	
+	\subsection{Quarta subseção}	
+	Texto com exemplo de citação \cite{referencia}. 
+	\section{Resultados}
+	\section{Discussão}
+	\section{Agradecimentos}
+	\section{Conclusão}	
+	Texto da seção de conclusão.
+\end{comment}
+	\bibliographystyle{abnt-num}
+	\bibliography{sbc-template}	
+\end{document}

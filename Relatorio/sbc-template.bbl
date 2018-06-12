@@ -1,0 +1,38 @@
+\providecommand{\abntreprintinfo}[1]{%
+ \citeonline{#1}}
+\begin{thebibliography}{}
+\providecommand{\abntrefinfo}[3]{}
+\providecommand{\abntbstabout}[1]{}
+\abntbstabout{1.50 }
+
+\bibitem{freitas2003}
+\abntrefinfo{Freitas e Justino}{FREITAS; JUSTINO}{2003}
+{FREITAS, C. O. D.~A.; JUSTINO, E. J.~R. A an\'alise e o reconhecimento da
+  escrita manuscrita na l\'ingua portuguesa.
+Pontif\'icia Universidade Cat\'olica do Paran\'a, 2003.}
+
+\bibitem{goncalves2008}
+\abntrefinfo{Gon\c{c}alves}{GON\c{C}ALVES}{2008}
+{GON\c{C}ALVES, D.~B. Agrupamento de classificadores na verifica\c{c}\~ao de
+  assinaturas \textit{Off-Line}.
+Pontif\'icia Universidade Cat\'olica do Paran\'a, 2008.}
+
+\bibitem{coetzer2006}
+\abntrefinfo{Coetzer B. M.~Herbst}{COETZER B. M.~HERBST}{2006}
+{COETZER B. M.~HERBST, J. A. D.~P. J. Off-line signature verification: A
+  comparison between human and machine performance.
+Tenth International Workshop on Frontiers in Handwriting Recognition, 2006.}
+
+\bibitem{justino2001}
+\abntrefinfo{Justino}{JUSTINO}{2001}
+{JUSTINO, E. J.~R. O grafismo e os modelos escondidos de markov na
+  verifica\c{c}\~ao autom\'atica de assinaturas.
+Pontif\'icia Universidade Cat\'olica do Paran\'a, 2001.}
+
+\bibitem{tebaldi2007}
+\abntrefinfo{Tebaldi}{TEBALDI}{2007}
+{TEBALDI, F.~B. Estudo de redes neurais artificiais para verifica\c{c}\~ao e
+  classifica\c{c}\~ao de assinaturas atrav\'es de imagens.
+Centro Universit\'ario Eur\'ipedes de Mar\'ilia, 2007.}
+
+\end{thebibliography}
