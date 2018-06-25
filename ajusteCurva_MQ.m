@@ -24,7 +24,7 @@
 
 ## Ajuste de Curva pelo método dde Mínimos Quadrados
 
-function [retval] = ajusteCurva_MQ (vetorX, vetorY)
+function [retval] = ajusteCurva_MQ ()#(vetorX, vetorY)
     ## vetorX = [0.3 2.7 4.5 5.9 7.8];
     ## vetorY = [1.8 1.9 3.1 3.9 3.3];
     ## saidas:

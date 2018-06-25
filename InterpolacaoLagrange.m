@@ -32,7 +32,8 @@
 ## somatorio deve retornar o valor 1.4141
 
 function [somatorio] = InterpolacaoLagrange (X, Y, a)
-    n = size(X, 2); #size retorna [linha coluna]. 2 para pegar coluna
+    #n = size(X, 2); #size retorna [linha coluna]. 2 para pegar coluna
+    n = 1;
     somatorio = 0;
     for i = 1 : n
         produtorio = 1;

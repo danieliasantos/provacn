@@ -14,24 +14,22 @@
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ## -*- texinfo -*- 
-## @deftypefn {Function File} {@var{retval} =} InterpolacaoQuadratica (@var{input1}, @var{input2})
-## 
+## @deftypefn {} {@var{retval} =} MinimosQuadrados (@var{input1}, @var{input2})
+##
 ## @seealso{}
 ## @end deftypefn
 
 ## Author: Daniel Elias <daniel@danielias-note>
-## Created: 2018-04-25
-## A: ponto desejado
-## pUm: x, dado pelo exercicio
-## pDois: y, dado pelo exercicio
-## P: dominio
+## Created: 2018-06-04
 
-function [retval] = InterpolacaoQuadratica (A, pUm, pDois, P)
-    A = [1, pUm(1), pUm(1)^2; 1, pUm(2), pUm(2)^2; 1, pUm(3), pUm(3)^2];
-    B = [pDois(1); pDois(2); pDois(3)];
-    [A, U, L, Det, Pivot, p] = decomposicaoLU(A);
-    #y = STI(L, p * B);
-    retval = STS(U, y);
-    polyout(flip(retval), 'x')
-    retval = polyval(flip(retval), P)
+## Ajuste de Curva pelo método de Mínimos Quadrados
+
+function [retval] = ajusteCurva_MQ (vetorX, vetorY)
+    n = size(vetorX, 2);
+    b1 = (sum(vetorX) * sum(vetorY) - n .* sum(vetorX .* vetorY)) / (sum(vetorX) ^ 2 - n * sum(vetorX .^ 2));
+    b0 = (sum(vetorY) - b1 * sum(vetorX)) / n;
+    vetorZ = b0 + b1 * vetorX;
+    erro = sum((vetorZ - vetorY) .^ 2);
+    plot(vetorX, vetorY, 'bo'), hold on;
+    plot(vetorX, vetorZ, 'k-');
 endfunction

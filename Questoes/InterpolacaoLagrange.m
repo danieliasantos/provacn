@@ -14,24 +14,33 @@
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ## -*- texinfo -*- 
-## @deftypefn {Function File} {@var{retval} =} InterpolacaoQuadratica (@var{input1}, @var{input2})
-## 
+## @deftypefn {Function File} {@var{retval} =} InterpolacaoLagrange (@var{input1}, @var{input2}, @var{input3})
+##
 ## @seealso{}
 ## @end deftypefn
 
 ## Author: Daniel Elias <daniel@danielias-note>
 ## Created: 2018-04-25
-## A: ponto desejado
-## pUm: x, dado pelo exercicio
-## pDois: y, dado pelo exercicio
-## P: dominio
+## a: valor a ser interpolado
+## X: vetor de pontos de x
+## Y: vetor de pontos de y
+## n: quantidade de pontos fornecidos (ordem do polinomio)
+########### entrada de teste ###########
+## a = 0.2
+## X = [0.1, 0.6, 0.8]
+## Y = [1.221, 3.320, 4.953]
+## somatorio deve retornar o valor 1.4141
 
-function [retval] = InterpolacaoQuadratica (A, pUm, pDois, P)
-    A = [1, pUm(1), pUm(1)^2; 1, pUm(2), pUm(2)^2; 1, pUm(3), pUm(3)^2];
-    B = [pDois(1); pDois(2); pDois(3)];
-    [A, U, L, Det, Pivot, p] = decomposicaoLU(A);
-    #y = STI(L, p * B);
-    retval = STS(U, y);
-    polyout(flip(retval), 'x')
-    retval = polyval(flip(retval), P)
+function [somatorio] = InterpolacaoLagrange (X, Y, a)
+    n = size(X, 2); #size retorna [linha coluna]. 2 para pegar coluna
+    somatorio = 0;
+    for i = 1 : n
+        produtorio = 1;
+        for j = 1 : n
+            if( i != j)
+                produtorio = produtorio .* (a - X(j)) / (X(i) - X(j));
+            endif
+        endfor
+        somatorio = somatorio + Y(i) * produtorio;
+    endfor   
 endfunction
