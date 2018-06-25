@@ -1,0 +1,40 @@
+Utilizando x como o eixo tempo em dias e y1 como amostra 1 e y2 como amostra 2, a modelagem ocorreu de acordo com o enunciado, ficando assim:
+
+x = [0,6,10,13,17,20,28];
+y1 = [6.6700,17.3300,42.6700,37.3300,30.1000,29.3100,28.7400];
+y2 = [6.6700,16.1100,18.8900,15.0000,10.5600,9.4400,8.8900];
+
+Foi utilizado também um dominio a, que vai de 0 a 28 com passo de 0,01:
+
+a = [0:.01:28];
+
+Logo em seguida, uma variavel de controle n é definida como tamanho do vetor a para controle do FOR que manipula a criação da curva em que são chamados os elementos do enunciado na função InterpolacaoLagrange():
+
+n = size(a,2);
+  for i=1:n
+    curva1(i) = InterpolacaoLagrange(x,y1,a(i));
+  endfor
+
+Então, começamos a fazer o plot da amostra 1 com uma curva em vermelho, utilizando o vetor "a" como dominio e logo em seguida descobrindo os valores mínimo e máximo do vetor, assim como pede a questão B:
+
+  plot(a,curva1,'r'); hold on
+  min1 = min(curva1)
+  max1 = max(curva1)
+
+O exato procedimento se repete para a amostra 2, onde a curva é em azul:
+
+  for i=1:n
+    curva2(i) = InterpolacaoLagrange(x,y2,a(i));
+  endfor
+  
+  plot(a,curva2,'b');
+  min2 = min(curva2)
+  max2 = max(curva2)
+
+E, para finalizar, a declaração e ajustes dos elementos no gráfico como titulo, rótulos e legendas:
+
+  xlabel('Tempo em dias');
+  ylabel('Peso medio em mg');
+  title('Grafico de relacao entre folhas de carvalho e peso de larvas');
+  legend("Amostra 1","Amostra 2");
+
