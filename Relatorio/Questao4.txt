@@ -1,0 +1,36 @@
+A modelagem foi feita de acordo com o seguinte:
+
+Na letra A (Arquivo Questao4a.m), o algoritmo (spline3.m) utiliza uma matriz de coordenadas correspondentes, logo, de acordo com o enunciado a declaração de X ficou assim:
+
+X = [0.9 1.3 1.9 2.1 2.6 3.0 3.9 4.4 4.7 5 6 7 8 9.2 10.5 11.3 11.6 12 12.6 13 13.3; 1.3 1.5 1.85 2.1 2.6 2.7 2.4 2.15 2.05 2.1 2.25 2.3 2.25 1.95 1.4 0.9 0.7 0.6 0.5 0.4 0.25];
+
+Onde a primeira coluna é o x e a segunda coluna é o respectivo f(x)
+
+Utilizando então a variável X é feita a chamada do código spline3.m
+
+Spline = spline3(X);
+
+No próprio código do spline3.m é feito o plot do pato e com asteriscos(*) são marcados os pontos originais de X, para efeito de comparação
+
+Na letra B (Arquivo Questao4B.m), vamos utilizar novamente o InterpolacaoLagrange.m, então precisamos declarar dois vetores e um dominio com n=20, assim como pedido no enunciado:
+
+  x = [0.9 1.3 1.9 2.1 2.6 3.0 3.9 4.4 4.7 5 6 7 8 9.2 10.5 11.3 11.6 12 12.6 13 13.3];
+  y = [1.3 1.5 1.85 2.1 2.6 2.7 2.4 2.15 2.05 2.1 2.25 2.3 2.25 1.95 1.4 0.9 0.7 0.6 0.5 0.4 0.25];
+  dom = linspace(0.9,13.3,20);
+
+E então a função é chamada:
+
+  Lagrange = InterpolacaoLagrange(x,y,dom)
+
+Agora, com os resultados do Spline e Lagrange, o arquivo "Questao4.m" utiliza o mesmo domínio de n=20 para plotar Lagrange ao lado do spline e após fazer a declaração e formatação do gráfico:
+
+[ Spline ] = Questao4A();   
+  [ Lagrange ] = Questao4B();
+  dom = linspace(0.9,13.3,20);
+  plot(dom,Lagrange,'k'); 
+  title("Questao 4");
+  h = legend ("Spline", "Lagrange");
+  legend (h, "location", "northeastoutside");
+  set(h, "fontsize", 20);
+  hold on;
+

@@ -31,16 +31,20 @@ function [pY, p1, p2, p3] = Questao01 ()
     # pontos dados e funcao dada
     x = [1.5 1.6 1.9];
     y = (x .- 1) .^ (1 / 3);
-    pX = 1.7;
+    pX = 1.7
+    pY = (pX - 1) ^ (1 / 3)
     
     #p1 -> interpolacao linear (grau um)
     p1 = y(2) + ((y(3) - y(2)) / (x(3) - x(2))) * (pX - x(2))    
-
+    erroP1 = p1 - pY
+    
     #p2 -> interpolacao quadratica (grau dois)
     p2 = (y(1) * (((pX - x(2)) * (pX - x(3))) / ((x(1) - x(2)) * (x(1) - x(3)))) + (y(2) * ((pX - x(1)) * (pX - x(3)) / ((x(2) - x(1)) * (x(2) - x(3))))) + (y(3) * (((pX - x(1)) * (1.7 - x(2))) / ((x(3) - x(1)) * (x(3) - x(2))))))
-        
+    erroP2 = p2 - pY
+    
     #p3 -> interpolacao cubica (grau tres)
     p3 = interp1(x, y, pX, 'cubic')
+    erroP3 = p3 - pY
     
     #plot das funcoes
     eixoX = [1.1 : 0.01 : 2.3];

@@ -23,9 +23,15 @@
 ## Created: 2018-06-24
 
 function [] = Questao03 ()
-    x = [183 173 168 188 158 163 193 163 178];
-    y = [79 69 70 81 61 63 79 71 73];
+    vetorX = [183 173 168 188 158 163 193 163 178];
+    vetorY = [79 69 70 81 61 63 79 71 73];
+
+    n = size(vetorX, 2);
+    b1 = (sum(vetorX) * sum(vetorY) - n .* sum(vetorX .* vetorY)) / (sum(vetorX) ^ 2 - n * sum(vetorX .^ 2))
+    b0 = (sum(vetorY) - b1 * sum(vetorX)) / n
+    vetorZ = b0 + b1 * vetorX;
+    erro = sum((vetorZ - vetorY) .^ 2);
+    plot(vetorX, vetorY, 'bo'), hold on;
+    plot(vetorX, vetorZ, 'k-');
     
-    #plot(x, y, 'ro');
-    ajusteCurva_MQ(x, y);
 endfunction
