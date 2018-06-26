@@ -22,16 +22,21 @@
 ## Author: Daniel Elias <daniel@danielias-note>
 ## Created: 2018-06-24
 
-function [] = Questao03 ()
-    vetorX = [183 173 168 188 158 163 193 163 178];
-    vetorY = [79 69 70 81 61 63 79 71 73];
-
-    n = size(vetorX, 2);
-    b1 = (sum(vetorX) * sum(vetorY) - n .* sum(vetorX .* vetorY)) / (sum(vetorX) ^ 2 - n * sum(vetorX .^ 2))
-    b0 = (sum(vetorY) - b1 * sum(vetorX)) / n
-    vetorZ = b0 + b1 * vetorX;
-    erro = sum((vetorZ - vetorY) .^ 2);
-    plot(vetorX, vetorY, 'bo'), hold on;
-    plot(vetorX, vetorZ, 'k-');
+function [] = Questao03C ()
+    #dados
+    vetorX = [173 178 183]; # altura dos funcionarios em cm
+    vetorY = [69 73 79]; # peso dos funcionarios em kg
+    
+    # estimativa de peso para altura de 175cm, usando interpolacao cubica
+    a = 175
+    fA = interp1(vetorX, vetorY, a, 'cubic')
+    
+    #dados
+    vetorX = [73 79 81]; # altura dos funcionarios em cm
+    vetorY = [178 193 188]; # peso dos funcionarios em kg
+    
+    # estimativa de altura para peso de 80kg, usando interpolacao cubica
+    p = 80
+    fP = interp1(vetorX, vetorY, p, 'cubic')
     
 endfunction

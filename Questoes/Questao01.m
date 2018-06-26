@@ -27,7 +27,7 @@ Author: Daniel Elias <daniel@danielias-note>
 Created: 2018-06-13
 #}
 
-function [pY, p1, p2, p3] = Questao01 ()
+function [] = Questao01 ()
     # pontos dados e funcao dada
     x = [1.5 1.6 1.9];
     y = (x .- 1) .^ (1 / 3);

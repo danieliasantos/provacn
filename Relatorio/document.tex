@@ -10,6 +10,7 @@
 \usepackage{amsmath,amsthm,amssymb}
 \usepackage[brazil]{babel}  
 \usepackage[utf8]{inputenc}
+\usepackage{algpseudocode,algorithm}	% pseudo-codigo
  
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
@@ -38,6 +39,26 @@
 \newenvironment{corollary}[2][Corolário]{\begin{trivlist}
 \item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
  
+% Declaracoes
+\algrenewcommand\algorithmicend{\textbf{fim}}
+\algrenewcommand\algorithmicdo{\textbf{faça}}
+\algrenewcommand\algorithmicwhile{\textbf{enquanto}}
+\algrenewcommand\algorithmicfor{\textbf{para}}
+\algrenewcommand\algorithmicif{\textbf{se}}
+\algrenewcommand\algorithmicthen{\textbf{então}}
+\algrenewcommand\algorithmicelse{\textbf{senão}}
+\algrenewcommand\algorithmicreturn{\textbf{devolve}}
+\algrenewcommand\algorithmicfunction{\textbf{função}}
+
+\algrenewtext{EndWhile}{\algorithmicend\ \algorithmicwhile}
+\algrenewtext{EndFor}{\algorithmicend\ \algorithmicfor}
+\algrenewtext{EndIf}{\algorithmicend\ \algorithmicif}
+\algrenewtext{EndFunction}{\algorithmicend\ \algorithmicfunction}
+
+\algnewcommand\algorithmicto{\textbf{até}}
+\algrenewtext{For}[3]%
+{\algorithmicfor\ #1 $\gets$ #2 \algorithmicto\ #3 \algorithmicdo}
+ 
 \begin{document}
  
 % --------------------------------------------------------------
@@ -50,62 +71,152 @@ Cálculo Numérico\\
 2018.01} %if necessary, replace with your course title
  
 \maketitle
-
+\newpage
 \begin{question}{1}
-
-\end{question}
-\begin{question}{2}
-	conteúdo...
-\end{question}
-\begin{question}{3}
-	conteúdo...
-\end{question}
-\begin{question}{4}
-	conteúdo...
-\end{question}
-\begin{comment}
-	Questão 1. Para $f(x) = 3x - 1$, definida no intervalo $x \in (1, +\infty)$, sejam $x\textsubscript{0} = 1,5, x\textsubscript{1} = 1,6$ e $x\textsubscript{2} = 1,9$. Construa polinômios interpoladores de grau um $(P\textsubscript{1}(x)$, interpolação linear), grau dois $(P\textsubscript{2}(x)$, interpolação quadrática) e grau três $(P\textsubscript{3}(x)$, interpolação cúbica) para determinar uma aproximação de $f(1,7)$ e encontre o erro absoluto para cada aproximação no ponto 1,7. Plote as funções $f(x)$, $P\textsubscript{1}(x)$,  $P\textsubscript{2}(x)$ e $P\textsubscript{3}(x)$ em um mesmo gráfico, inserindo \textit{nomes nos eixos}, \textit{título} e \textit{legenda}. Determine as equações dos polinômios $P\textsubscript{1}(x)$, $P\textsubscript{2}(x)$ e $P\textsubscript{3}(x)$. Faça uma interpretação dos resultados.
+	Para solução da questão, primeiramente foi calculado \textit{f(1,7)}, utilizando a função $f(x) = \sqrt[3]{(x - 1)}$, onde \textit{pX} era o ponto a ser interpolado, e \textit{pY} o valor exato da função, como a seguir:\\
+	\begin{algorithm}
+		\begin{algorithmic}[1]
+			\State{$pX \gets 1.7$})
+			\State{$pY \gets (pX - 1) ^ {\frac{1}{3}}$} \Comment{$pY = 0.88790$}
+		\end{algorithmic}
+	\end{algorithm} \\
+	Após, foi calculada a Interpolação Linear, de grau um (\textit{P}\textsubscript{1}), utilizando a expressão $p1 = (\frac{y(3) - y(2)}{x(3) - x(2)}) \times (pX - x(2))$, utilizando os pontos \textit{1,6} e \textit{1,9}, mais próximos do ponto buscado. Resultado: $\textit{P}\textsubscript{1} = 0.88412$. Foi calculado, também, o erro absoluto em relação à função original: $erroP1 = p1 - pY$, tendo por resultado, $-0.0037858$.\\
 	
-%Below is an example of the problem environment
-\begin{question}{6}
-\begin{enumerate}[label=\alph*)]
-    \item Suppose an entire function $f$ is bounded by $M$ along $|z|=R$. Show that the coefficients $C_k$ in its power series expansion about $0$ satisfy
-    \[
-    |C_k|\leq\frac{M}{R^k}.
-    \]
-    \item Suppose a polynomial is bounded by $1$ in the unit disc. Show that all its coefficients are bounded by 1.
-\end{enumerate}
+	Na sequencia foi calculada a Interpolação Quadrática, de grau dois (\textit{P}\textsubscript{2}), utilizando a expressão: \\
+	
+	$p2 = y(1) \times \frac{(pX - x(2)) \times (pX - x(3))}{(x(1) - x(2)) \times (x(1) - x(3))} + y(2) \times \frac{(pX - x(1)) \times (pX - x(3))}{(x(2) - x(1)) \times (x(2) - x(3))} + y(3) \times \frac{(pX - x(1)) \times (1.7 - x(2))}{(x(3) - x(1)) \times (x(3) - x(2))} $ \\
+	
+	Nesta expressão, todos os pontos dados foram utilizados. Resultado: $\textit{P}\textsubscript{2} = 0.88864$. O erro absoluto calculado foi: $erroP2 = p2 - pY = 7.3752e-04$. \\
+	
+	A seguir, foi calculada a Interpolação Cúbica, de grau três (\textit{P}\textsubscript{3}), utilizando a função interna do Octave \textit{interp1}, como a seguir: \\
+	
+	$p3 = interp1(x, y, pX, 'cubic')$ \\
+	
+	Neste caso, o resultado foi: $\textit{P}\textsubscript{3} = 0.88777$. O erro absoluto foi: $erroP3 = p3 - pY = -1.3147e-04$. A seguir, as funções foram plotadas para comparação. Como esperado, a curva de interpolação que mais se aproximou da curva da função foi a Interpolação Cúbica $\textit{P}\textsubscript{3}$.
+
 \end{question}
 
-%Below is the solution environment
-\begin{solution}{}
-Part a): Since $f$ is an entire function it can be expressed as an infinite power series, i.e.
-\[
-f(z)=\sum_{k=0}^\infty\frac{f^{(k)}(0)}{k!}z^k=\sum_{k=0}^\infty C_kz^k.
-\]
-If we recall Cauchy's Integral we have
-\[
-f(z)=\frac{1}{2\pi i}\int_\gamma\frac{f(w)}{w-z}\ dw,
-\]
-carefully notice that $\frac{1}{w-z}=\frac{1}{w}\cdot\frac{1}{1-\frac{z}{w}}$ can be written as a geometric series. We have
+\newpage
+\begin{question}{2}
+	Utilizando \textit{x} como o eixo tempo em dias e \textit{y1} como amostra 1 e \textit{y2} como amostra 2, a modelagem ocorreu de acordo com o enunciado, ficando assim:\\
+	$x = [0,6,10,13,17,20,28];$\\
+	$y1 = [6.6700,17.3300,42.6700,37.3300,30.1000,29.3100,28.7400];$\\
+	$y2 = [6.6700,16.1100,18.8900,15.0000,10.5600,9.4400,8.8900];$\\
 
-%The align environment with no label
-\begin{align*}
-\frac{1}{2\pi i}\int_\gamma\frac{f(w)}{w-z}\ dw &=\frac{1}{2\pi i}\int_\gamma\left\lbrace\frac{f(w)}{w}\cdot\left(\frac{1}{1-\frac{z}{w}}\right) \right\rbrace\ dw\\[8pt]
-&=\frac{1}{2\pi i}\int_\gamma\left\lbrace\frac{f(w)}{w}\cdot\left(1+\frac{z}{w}+\frac{z^2}{w^2}+\frac{z^3}{w^3}+\cdots\right) \right\rbrace\ dw\\[8pt]
-&=\left(\frac{1}{2\pi i}\int_\gamma \frac{f(w)}{w}\ dw\right)z^0+\left(\frac{1}{2\pi i}\int_\gamma \frac{f(w)}{w^2}\ dw\right)z^1+\left(\frac{1}{2\pi i}\int_\gamma \frac{f(w)}{w^3}\ dw\right)z^2\cdots
-\end{align*}
-Now take the modulus of $C_k$ to get
-\[
-|C_k|=\left\lvert\frac{1}{2\pi i}\int_\gamma \frac{f(w)}{w^{k+1}}\ dw \right\rvert\leq\frac{1}{2\pi}\int_\gamma\frac{|f(w)|}{|w^{k+1}|}\ |dw|\leq \frac{M}{2\pi}\int_\gamma\frac{|dw|}{|w^{k+1}|}
-\]
-Then integrate along $\gamma(\theta)=Re^{i\theta}$ for $\theta\in [0,2\pi]$ to get
-\[
-|C_k|\leq \frac{M}{2\pi}\int_0^{2\pi}\frac{|iRe^{i\theta}\ d\theta|}{|R^{k+1}e^{ik\theta}|}=\frac{M}{2\pi\cdot R^k}\int_0^{2\pi}\ d\theta=\frac{M}{R^k}.
-\]
-Hence, $|C_k|\leq \frac{M}{R^k}$.
-\end{solution}
-\pagebreak
-\end{comment}
+	Foi utilizado também um domínio \textit{a}, que vai de 0 a 28 com passo de 0,01: $a \gets [0:.01:28];$. Logo em seguida, uma variável de controle \textit{n} é definida como tamanho do vetor a para controle do laço que manipula a criação da curva em que são chamados os elementos do enunciado na função \textit{InterpolacaoLagrange()}:\\
+	\begin{algorithm}
+		\begin{algorithmic}[1]
+			\State{$n \gets size(a,2);$}
+			\For{i}{1}{n}
+			\State {$curva[i] \gets InterpolacaoLagrange(x, y1, a(i))$} \Comment{Preenche o vetor}
+			\EndFor
+		\end{algorithmic}
+	\end{algorithm}\\
+
+	Então, começamos a fazer o \textit{plot} da amostra 1 com uma curva em vermelho, utilizando o vetor \textit{a} como domínio e logo em seguida descobrindo os valores mínimo e máximo do vetor, assim como pede a questão B:\\
+	
+	\begin{algorithm}
+		\begin{algorithmic}[1]
+			\State{$plot(a,curva1,'r'); hold on$}
+			\State{$min1 = min(curva1)$}
+			\State{$max1 = max(curva1)$}
+		\end{algorithmic}
+	\end{algorithm}
+
+	O exato procedimento se repete para a amostra 2, onde a curva é em azul:\\
+	\begin{algorithm}
+		\begin{algorithmic}[1]
+			\For{i}{1}{n}
+			\State {$curva[i] \gets InterpolacaoLagrange(x, y2, a(i))$}
+			\EndFor
+			\State{$plot(a,curva2,'b');$}
+			\State{$min2 = min(curva2)$}
+			\State{$max2 = max(curva2)$}
+		\end{algorithmic}
+	\end{algorithm}\\
+	E, para finalizar, a declaração e ajustes dos elementos no gráfico como titulo, rótulos e legendas.\\
+
+\end{question}
+
+\newpage
+\begin{question}{3}
+	A questão 3 foi solucionada na seguinte forma:\\
+	Na solução da letra A (Questa03A.m), foram utilizadas as bases, sendo que na ordenada foi informada a altura dos funcionários, e na abscissa o seu peso, e plotado o gráfico de dispersão.\\
+	$vetorX = [183, 173, 168, 188, 158, 163, 193, 163, 178];$\\
+	$vetorY = [79, 69, 70, 81, 61, 63, 79, 71, 73];$\\
+	
+	Para resolução da letra B (Questa03B.m), foi utilizado o algoritmo de ajuste pelos mínimos quadrados, tendo como resultado o $b \textsubscript{0} = -20.078$ e $b \textsubscript{1} = 0.52757$, utilizando a altura em centímetros. O \textit{plot} do gráfico contém o Diagrama de Dispersão, da letra A, e a reta de ajuste, para comparação\\
+	
+	A resolução da letra C (Questa03C.m) utilizou o algoritmo de Interpolação Cúbica para estimar o peso e altura, conforme enunciado. Os resultados foram: peso de 70.379kg para altura de 175cm e 191.44cm para peso de 80kg. Neste caso, os dados foram ordenados do enunciado foram ordenados, e utilizados somente os que eram mais próximos ao solicitado:\\
+	
+	Estimativa de peso para altura de 175cm:\\
+	\begin{algorithm}
+		\begin{algorithmic}[1]
+			\State{$vetorX = [173, 178, 183];$}
+			\State{$vetorY = [69, 73, 79];$}
+			\State{$a = 175;$}
+			\State{$fA = interp1(vetorX, vetorY, a, 'cubic')$}
+			\State{$fA = 70.379$}
+		\end{algorithmic}
+	\end{algorithm}
+	
+	Estimativa de altura para peso de 80kg:\\
+	\begin{algorithm}
+		\begin{algorithmic}[1]
+			\State{$vetorX = [73, 79, 81];$}
+			\State{$vetorY = [178, 193, 188];$}
+			\State{$p = 80;$}
+			\State{$fP = interp1(vetorX, vetorY, p, 'cubic')$}
+			\State{$fP = 191.44$}
+		\end{algorithmic}
+	\end{algorithm}
+	
+	A letra D (Questa03D.m) foi resolvida como a letra B, mas invertendo-se os dados: a ordenada recebeu o peso e a abscissa recebeu a altura. Foi utilizado, também, o algoritmo de ajuste por mínimos quadrados, tendo como resultado o $b \textsubscript{0} = 60.295$ e $b \textsubscript{1} = 1.5857$, utilizando a altura em centímetros. O \textit{plot} do gráfico contém o Diagrama de Dispersão e a reta de ajuste, para comparação.\\
+	
+	Não houve entendimento sobre como resolver a letra E.
+	
+\end{question}
+
+\newpage
+\begin{question}{4}
+	A modelagem foi feita de acordo com o seguinte:\\
+	
+	Na letra A (Arquivo Questao4a.m), o algoritmo (spline3.m) utiliza uma matriz de coordenadas correspondentes, logo, de acordo com o enunciado a declaração de X ficou assim:\\
+	
+	$X = [0.9, 1.3, 1.9, 2.1, 2.6, 3.0, 3.9, 4.4, 4.7, 5, 6, 7, 8, 9.2, 10.5, 11.3, 11.6, 12, 12.6, 13, 13.3; \\1.3, 1.5, 1.85, 2.1, 2.6, 2.7, 2.4, 2.15, 2.05, 2.1, 2.25, 2.3, 2.25, 1.95, 1.4, 0.9, 0.7, 0.6, 0.5, 0.4, 0.25];$ \\
+	
+	Onde a primeira coluna é o x e a segunda coluna é o respectivo $f(x)$. Utilizando então a variável X é feita a chamada do código spline3.m:\\
+	
+	$Spline = spline3(X);$\\
+	
+	No próprio código do spline3.m é feito o plot do pato e com asteriscos(*) são marcados os pontos originais de X, para efeito de comparação.\\
+	
+	Na letra B (Arquivo Questao4B.m), vamos utilizar novamente o InterpolacaoLagrange.m, então precisamos declarar dois vetores e um dominio com n=20, assim como pedido no enunciado:\\
+	
+	$x = [0.9, 1.3, 1.9, 2.1, 2.6, 3.0, 3.9, 4.4, 4.7, 5, 6, 7, 8, 9.2, 10.5, 11.3, 11.6, 12, 12.6, 13, 13.3];$\\
+	$y = [1.3, 1.5, 1.85, 2.1, 2.6, 2.7, 2.4, 2.15, 2.05, 2.1, 2.25, 2.3, 2.25, 1.95, 1.4, 0.9, 0.7, 0.6, 0.5, 0.4, 0.25];$\\
+	$dom = linspace(0.9,13.3,20);$\\
+	
+	E então a função é chamada:\\
+	
+	$Lagrange = InterpolacaoLagrange(x,y,dom)$\\
+	
+	Agora, com os resultados do Spline e Lagrange, o arquivo "Questao4.m" utiliza o mesmo domínio de n=20 para plotar Lagrange ao lado do spline e após fazer a declaração e formatação do gráfico:\\
+
+	\begin{algorithm}
+		\begin{algorithmic}[1]
+			\State{$[ Spline ] = Questao4A();$}
+			\State{$[ Lagrange ] = Questao4B();$}
+			\State{$dom = linspace(0.9,13.3,20);$}
+			\State{$plot(dom,Lagrange,'k');$}
+			\State{$title("Questao 4");$}
+			\State{$h = legend ("Spline", "Lagrange");$}
+			\State{$legend (h, "location", "northeastoutside");$}
+			\State{$set(h, "fontsize", 20);$}
+			\State{$hold on;$}
+		\end{algorithmic}
+	\end{algorithm}
+		
+\end{question}
 
 \end{document}
